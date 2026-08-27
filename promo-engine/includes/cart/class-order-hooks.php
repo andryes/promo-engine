@@ -35,6 +35,11 @@ class Order_Hooks {
 	public function add_order_meta( \WC_Order $order ): void {
 		$summary = Cart_Hooks::session_summary();
 		if ( ! $summary || empty( $summary['promo_totals'] ) ) {
+			// The blocks checkout reuses one draft order across passes —
+			// clear promo meta written earlier so a now-promo-free cart
+			// does not log phantom events or consume usage limits.
+			$order->delete_meta_data( '_pe_promotions' );
+			$order->delete_meta_data( '_pe_total_saved' );
 			return;
 		}
 		$order->update_meta_data( '_pe_promotions', $summary['promo_totals'] );
