@@ -61,7 +61,7 @@ with a per-promotion discount breakdown. That makes the money math unit-testable
 without a WordPress install:
 
 ```
-php tests/engine-test.php     # 29 assertions, includes all 9 spec examples
+php tests/engine-test.php     # 38 assertions, includes all 9 spec examples
 ```
 
 The pipeline follows the spec ordering:
@@ -138,7 +138,10 @@ combination rule applies **among promotions competing within the same stage**:
 
 Promotions are a custom post type `pe_promotion` (title + a settings meta box) —
 this reuses WordPress' battle-tested CRUD UI, capabilities, revisions-free simple
-flow and i18n instead of a custom table + hand-rolled list screen. All meta is
+flow and i18n instead of a custom table + hand-rolled list screen. Every
+promotion operation (create/edit/publish/delete) is mapped to the
+`manage_woocommerce` capability, so only store managers and admins can change
+pricing rules. All meta is
 saved under `_pe_*` keys with a nonce, capability check and per-field
 sanitization. Product selection uses WooCommerce's own AJAX product search
 (`wc-product-search`); categories/tags are checkbox lists.
@@ -166,13 +169,20 @@ timestamps when the DTOs are built.
   items show old/new prices (`wc_format_sale_price`) and promotion badges.
 - **Checkout** — a per-promotion savings breakdown in the order review table
   (`woocommerce_review_order_before_order_total`).
+- Scope note: the cart/mini-cart/checkout UI targets the classic (shortcode)
+  WooCommerce surfaces — that is what the spec's required hooks (mini-cart
+  fragments, review-order rows) exist for, and what the test site's theme uses.
+  The block-based Cart/Checkout renders its own React UI; price calculation
+  still applies there (the engine runs in `woocommerce_before_calculate_totals`
+  for Store API requests too), but the extra info blocks would need separate
+  Blocks integration points.
 
 ### Analytics (Part 4)
 
 Custom table `{prefix}pe_events`:
 
 ```
-id, event_type, promo_id, product_id, order_id, revenue, discount, created_at
+id, event_type, promo_id, product_id, order_id, variant, revenue, discount, created_at
 KEY promo_type_date (promo_id, event_type, created_at)
 KEY type_date (event_type, created_at)
 KEY order_id (order_id)
@@ -211,7 +221,7 @@ recorded discount total on the order.
   the variant. The per-promotion analytics screen shows views, clicks and CTR
   for variant A vs B. The demo Flash Sale promotion seeds both variants.
 - **Checkout savings breakdown** and **standalone unit tests** for the
-  calculation (31 assertions incl. all 9 spec examples) — see above.
+  calculation (38 assertions incl. all 9 spec examples) — see above.
 
 ### Security & performance checklist
 
