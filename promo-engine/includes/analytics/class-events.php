@@ -77,6 +77,7 @@ class Events {
 				promo_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
 				product_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
 				order_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+				variant VARCHAR(1) NOT NULL DEFAULT '',
 				revenue DECIMAL(12,2) NOT NULL DEFAULT 0,
 				discount DECIMAL(12,2) NOT NULL DEFAULT 0,
 				created_at DATETIME NOT NULL,
@@ -93,7 +94,7 @@ class Events {
 	 *
 	 * @param string               $type Event type.
 	 * @param int                  $promo_id Promotion ID.
-	 * @param array<string, mixed> $args Optional: product_id, order_id, revenue, discount.
+	 * @param array<string, mixed> $args Optional: product_id, order_id, revenue, discount, variant ('a'|'b').
 	 */
 	public static function log( string $type, int $promo_id, array $args = array() ): void {
 		global $wpdb;
@@ -111,6 +112,11 @@ class Events {
 			return;
 		}
 
+		$variant = (string) ( $args['variant'] ?? '' );
+		if ( ! in_array( $variant, array( 'a', 'b' ), true ) ) {
+			$variant = '';
+		}
+
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- custom analytics table, write path.
 		$wpdb->insert(
 			self::table(),
@@ -119,11 +125,12 @@ class Events {
 				'promo_id'   => $promo_id,
 				'product_id' => (int) ( $args['product_id'] ?? 0 ),
 				'order_id'   => (int) ( $args['order_id'] ?? 0 ),
+				'variant'    => $variant,
 				'revenue'    => round( (float) ( $args['revenue'] ?? 0 ), 2 ),
 				'discount'   => round( (float) ( $args['discount'] ?? 0 ), 2 ),
 				'created_at' => current_time( 'mysql' ),
 			),
-			array( '%s', '%d', '%d', '%d', '%f', '%f', '%s' )
+			array( '%s', '%d', '%d', '%d', '%s', '%f', '%f', '%s' )
 		);
 	}
 

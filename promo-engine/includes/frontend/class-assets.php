@@ -67,8 +67,12 @@ class Assets {
 				'dealsUrl' => $deals_page ? get_permalink( $deals_page ) : '',
 				'popup'    => $popup_promo
 					? array(
-						'id'   => $popup_promo->id,
-						'ends' => $popup_promo->ends_at ? $popup_promo->ends_at * 1000 : 0,
+						'id'     => $popup_promo->id,
+						'ends'   => $popup_promo->ends_at ? $popup_promo->ends_at * 1000 : 0,
+						'titles' => array(
+							'a' => '' !== $popup_promo->popup_title_a ? $popup_promo->popup_title_a : $popup_promo->name,
+							'b' => $popup_promo->popup_title_b,
+						),
 					)
 					: null,
 				'i18n'     => array(

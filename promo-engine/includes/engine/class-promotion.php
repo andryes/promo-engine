@@ -159,6 +159,20 @@ class Promotion {
 	public bool $popup_enabled = false;
 
 	/**
+	 * Popup headline, variant A (falls back to the promotion name).
+	 *
+	 * @var string
+	 */
+	public string $popup_title_a = '';
+
+	/**
+	 * Popup headline, variant B. Non-empty value enables the A/B test.
+	 *
+	 * @var string
+	 */
+	public string $popup_title_b = '';
+
+	/**
 	 * Max number of orders this promotion can be used in. 0 = unlimited.
 	 *
 	 * @var int

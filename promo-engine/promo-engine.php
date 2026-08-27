@@ -3,7 +3,7 @@
  * Plugin Name:          Promo Engine
  * Plugin URI:           https://github.com/andryes/promo-engine
  * Description:          Promotions engine for WooCommerce: percentage / fixed / BOGO / bundle / cart-threshold discounts with stacking rules, a deals page, promo popup, mini-cart savings and built-in analytics.
- * Version:              1.0.0
+ * Version:              1.1.0
  * Requires at least:    6.4
  * Requires PHP:         8.0
  * Author:               andryes
@@ -21,7 +21,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'PROMO_ENGINE_VERSION', '1.0.0' );
+define( 'PROMO_ENGINE_VERSION', '1.1.0' );
 define( 'PROMO_ENGINE_FILE', __FILE__ );
 define( 'PROMO_ENGINE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'PROMO_ENGINE_URL', plugin_dir_url( __FILE__ ) );
