@@ -180,6 +180,36 @@ class Analytics_Page {
 	}
 
 	/**
+	 * Popup views/clicks per A/B variant for one promotion.
+	 *
+	 * @param string $from     From date.
+	 * @param string $to       To date.
+	 * @param int    $promo_id Promotion ID.
+	 * @return array<int, object>
+	 */
+	private function ab_stats( string $from, string $to, int $promo_id ): array {
+		global $wpdb;
+		$table = Events::table();
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- custom table, fully prepared.
+		return (array) $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT variant,
+					SUM(event_type = %s) AS views,
+					SUM(event_type = %s) AS clicks
+				FROM {$table}
+				WHERE promo_id = %d AND variant IN ('a','b') AND created_at BETWEEN %s AND %s
+				GROUP BY variant ORDER BY variant ASC",
+				Events::TYPE_POPUP_VIEW,
+				Events::TYPE_POPUP_CLICK,
+				$promo_id,
+				$from . ' 00:00:00',
+				$to . ' 23:59:59'
+			)
+		);
+	}
+
+	/**
 	 * Render the page.
 	 */
 	public function render(): void {
@@ -284,6 +314,43 @@ class Analytics_Page {
 			<p class="description">
 				<?php esc_html_e( 'CTR = popup clicks / popup views. Conversion = orders / add-to-cart events.', 'promo-engine' ); ?>
 			</p>
+
+			<?php
+			if ( $filters['promo_id'] ) :
+				$ab = $this->ab_stats( $filters['from'], $filters['to'], $filters['promo_id'] );
+				if ( $ab ) :
+					$labels = array(
+						'a' => __( 'Variant A', 'promo-engine' ),
+						'b' => __( 'Variant B', 'promo-engine' ),
+					);
+					?>
+					<h2><?php esc_html_e( 'Popup A/B test', 'promo-engine' ); ?></h2>
+					<table class="widefat striped pe-analytics__top">
+						<thead>
+							<tr>
+								<th><?php esc_html_e( 'Variant', 'promo-engine' ); ?></th>
+								<th><?php esc_html_e( 'Popup views', 'promo-engine' ); ?></th>
+								<th><?php esc_html_e( 'Popup clicks', 'promo-engine' ); ?></th>
+								<th><?php esc_html_e( 'CTR', 'promo-engine' ); ?></th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php
+							foreach ( $ab as $row ) :
+								$views  = (int) $row->views;
+								$clicks = (int) $row->clicks;
+								?>
+								<tr>
+									<td><?php echo esc_html( $labels[ $row->variant ] ?? $row->variant ); ?></td>
+									<td><?php echo (int) $views; ?></td>
+									<td><?php echo (int) $clicks; ?></td>
+									<td><?php echo esc_html( $views ? number_format_i18n( $clicks / $views * 100, 1 ) . '%' : '—' ); ?></td>
+								</tr>
+							<?php endforeach; ?>
+						</tbody>
+					</table>
+				<?php endif; ?>
+			<?php endif; ?>
 
 			<?php if ( $filters['promo_id'] ) : ?>
 				<h2><?php esc_html_e( 'Top products (by add-to-cart)', 'promo-engine' ); ?></h2>

@@ -49,6 +49,10 @@ class Tracking {
 
 		$event    = isset( $_POST['event'] ) ? sanitize_key( wp_unslash( $_POST['event'] ) ) : '';
 		$promo_id = isset( $_POST['promo_id'] ) ? absint( wp_unslash( $_POST['promo_id'] ) ) : 0;
+		$variant  = isset( $_POST['variant'] ) ? sanitize_key( wp_unslash( $_POST['variant'] ) ) : '';
+		if ( ! in_array( $variant, array( 'a', 'b' ), true ) ) {
+			$variant = '';
+		}
 
 		$map = array(
 			'view'  => Events::TYPE_POPUP_VIEW,
@@ -70,7 +74,7 @@ class Tracking {
 			wp_send_json_error( null, 400 );
 		}
 
-		Events::log( $map[ $event ], $promo_id );
+		Events::log( $map[ $event ], $promo_id, array( 'variant' => $variant ) );
 		wp_send_json_success();
 	}
 }

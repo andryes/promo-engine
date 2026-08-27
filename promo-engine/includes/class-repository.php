@@ -189,6 +189,8 @@ class Repository {
 			'starts_at'     => $this->to_timestamp( (string) $meta( '_pe_starts' ) ),
 			'ends_at'       => $this->to_timestamp( (string) $meta( '_pe_ends' ) ),
 			'popup_enabled' => '1' === (string) $meta( '_pe_popup' ),
+			'popup_title_a' => (string) $meta( '_pe_popup_title_a' ),
+			'popup_title_b' => (string) $meta( '_pe_popup_title_b' ),
 			'usage_limit'   => max( 0, (int) $meta( '_pe_usage_limit' ) ),
 			'used_count'    => max( 0, (int) $meta( '_pe_used_count' ) ),
 		);

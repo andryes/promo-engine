@@ -278,6 +278,20 @@ class Meta_Boxes {
 					</label>
 				</td>
 			</tr>
+			<tr>
+				<th><label for="pe_popup_title_a"><?php esc_html_e( 'Popup headline — variant A', 'promo-engine' ); ?></label></th>
+				<td>
+					<input type="text" name="_pe_popup_title_a" id="pe_popup_title_a" value="<?php echo esc_attr( $meta( '_pe_popup_title_a' ) ); ?>" class="regular-text" />
+					<p class="description"><?php esc_html_e( 'Empty = the promotion name is used.', 'promo-engine' ); ?></p>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="pe_popup_title_b"><?php esc_html_e( 'Popup headline — variant B (A/B test)', 'promo-engine' ); ?></label></th>
+				<td>
+					<input type="text" name="_pe_popup_title_b" id="pe_popup_title_b" value="<?php echo esc_attr( $meta( '_pe_popup_title_b' ) ); ?>" class="regular-text" />
+					<p class="description"><?php esc_html_e( 'Fill in to run an A/B test: visitors are split 50/50 between the two headlines, and popup views/clicks are tracked per variant in Analytics.', 'promo-engine' ); ?></p>
+				</td>
+			</tr>
 		</table>
 		<?php
 	}
@@ -383,6 +397,8 @@ class Meta_Boxes {
 		update_post_meta( $post_id, '_pe_popup', ( '1' === $in( '_pe_popup' ) ) ? '1' : '0' );
 
 		update_post_meta( $post_id, '_pe_usage_limit', max( 0, (int) $in( '_pe_usage_limit' ) ) );
+		update_post_meta( $post_id, '_pe_popup_title_a', sanitize_text_field( (string) $in( '_pe_popup_title_a' ) ) );
+		update_post_meta( $post_id, '_pe_popup_title_b', sanitize_text_field( (string) $in( '_pe_popup_title_b' ) ) );
 	}
 
 	/**

@@ -6,7 +6,7 @@
 
 	var cfg = window.promoEngine || {};
 
-	function track( event, promoId ) {
+	function track( event, promoId, variant ) {
 		if ( ! cfg.ajaxUrl || ! promoId ) {
 			return;
 		}
@@ -15,6 +15,9 @@
 		data.append( 'nonce', cfg.nonce );
 		data.append( 'event', event );
 		data.append( 'promo_id', promoId );
+		if ( variant ) {
+			data.append( 'variant', variant );
+		}
 		if ( navigator.sendBeacon ) {
 			navigator.sendBeacon( cfg.ajaxUrl, data );
 		} else {
@@ -70,6 +73,31 @@
 		}
 
 		var lastFocused = null;
+
+		// A/B test: variant B headline configured → split visitors 50/50,
+		// remember the assignment for the session, report it with beacons.
+		var variant = '';
+		var titles = cfg.popup.titles || {};
+		if ( titles.b ) {
+			var variantKey = 'pePopupVariant-' + cfg.popup.id;
+			try {
+				variant = window.sessionStorage.getItem( variantKey ) || '';
+			} catch ( e ) {
+				// Storage unavailable.
+			}
+			if ( 'a' !== variant && 'b' !== variant ) {
+				variant = Math.random() < 0.5 ? 'a' : 'b';
+				try {
+					window.sessionStorage.setItem( variantKey, variant );
+				} catch ( e ) {
+					// Ignore.
+				}
+			}
+			var titleEl = popup.querySelector( '.pe-popup__title' );
+			if ( titleEl && titles[ variant ] ) {
+				titleEl.textContent = titles[ variant ];
+			}
+		}
 
 		function focusables() {
 			return popup.querySelectorAll( 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])' );
@@ -128,7 +156,7 @@
 				startCountdown( timerEl, cfg.popup.ends );
 			}
 
-			track( 'view', cfg.popup.id );
+			track( 'view', cfg.popup.id, variant );
 		}
 
 		popup.addEventListener( 'click', function ( e ) {
@@ -137,7 +165,7 @@
 				close();
 			}
 			if ( target.closest( '[data-pe-cta]' ) ) {
-				track( 'click', cfg.popup.id );
+				track( 'click', cfg.popup.id, variant );
 				if ( cfg.dealsUrl ) {
 					window.setTimeout( function () {
 						window.location.href = cfg.dealsUrl;

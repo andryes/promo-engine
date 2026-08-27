@@ -75,7 +75,7 @@ class Popup {
 				<?php if ( $discount ) : ?>
 					<p class="pe-popup__discount"><?php echo esc_html( $discount ); ?></p>
 				<?php endif; ?>
-				<h2 class="pe-popup__title" id="pe-popup-title"><?php echo esc_html( $promo->name ); ?></h2>
+				<h2 class="pe-popup__title" id="pe-popup-title"><?php echo esc_html( '' !== $promo->popup_title_a ? $promo->popup_title_a : $promo->name ); ?></h2>
 				<?php if ( $promo->ends_at ) : ?>
 					<p class="pe-popup__timer" data-pe-countdown aria-live="off">
 						<span class="pe-popup__timer-value">--:--:--</span>
