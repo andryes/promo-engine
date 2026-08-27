@@ -67,6 +67,7 @@ class Cart_Hooks {
 	 */
 	public function register(): void {
 		add_action( 'woocommerce_before_calculate_totals', array( $this, 'apply_discounts' ), 999 );
+		add_action( 'woocommerce_before_mini_cart', array( $this, 'ensure_calculated' ) );
 		add_filter( 'woocommerce_cart_item_price', array( $this, 'item_price_html' ), 20, 3 );
 		add_filter( 'woocommerce_cart_item_subtotal', array( $this, 'item_subtotal_html' ), 20, 3 );
 		add_filter( 'woocommerce_cart_item_name', array( $this, 'item_name_badges' ), 20, 3 );
@@ -92,6 +93,18 @@ class Cart_Hooks {
 		}
 		$summary = WC()->session->get( self::SESSION_KEY );
 		return is_array( $summary ) ? $summary : array();
+	}
+
+	/**
+	 * The mini-cart can be rendered in requests that never calculated totals
+	 * (wc-ajax=get_refreshed_fragments restores totals from the session
+	 * without recalculating): force one calculation so engine prices and
+	 * badges are present in the rendered fragment.
+	 */
+	public function ensure_calculated(): void {
+		if ( null === self::$last_result && function_exists( 'WC' ) && WC()->cart && ! WC()->cart->is_empty() ) {
+			WC()->cart->calculate_totals();
+		}
 	}
 
 	/**
