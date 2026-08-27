@@ -187,7 +187,7 @@ checkouts are hooked).
 The admin screen (Promo Engine → Analytics) shows per-promotion popup views,
 clicks, CTR, add-to-carts, orders, revenue, discount given and conversion
 (orders / add-to-carts), with a date range filter, a per-promotion top-products
-table and a daily time-series chart. The chart is **hand-rolled SVG rendered
+table, a popup A/B comparison and a daily time-series chart. The chart is **hand-rolled SVG rendered
 server-side** — no external chart libraries, no CDNs. All aggregations are single
 `GROUP BY` SQL queries through `$wpdb->prepare()`; nothing is aggregated in PHP
 loops. `created_at` is stored in the site timezone so date filters match what the
@@ -196,6 +196,22 @@ admin sees.
 Revenue attribution: a promotion's revenue = the final totals of the order lines
 it touched (the cart-level promo touches all lines). Discount = that promotion's
 recorded discount total on the order.
+
+### Bonus features
+
+- **Usage limit** — a promotion can cap how many orders it is used in
+  (`Usage limit (orders)` field; empty = unlimited). The counter increments
+  once per order at checkout; when the limit is reached the promotion silently
+  stops applying everywhere (cart, deals page, popup) and the promotions list
+  shows an "Exhausted" badge. The engine treats the limit like the date
+  window — an exhausted promotion is filtered out before calculation.
+- **Popup A/B test** — two headline variants per popup promotion. When variant
+  B is filled in, visitors are split 50/50 (assignment is remembered in
+  `sessionStorage` for the session) and every popup view/click event carries
+  the variant. The per-promotion analytics screen shows views, clicks and CTR
+  for variant A vs B. The demo Flash Sale promotion seeds both variants.
+- **Checkout savings breakdown** and **standalone unit tests** for the
+  calculation (31 assertions incl. all 9 spec examples) — see above.
 
 ### Security & performance checklist
 
@@ -216,4 +232,4 @@ recorded discount total on the order.
 | Part 3 — /deals/, popup, mini-cart, checkout breakdown | `includes/frontend/` |
 | Part 4 — events table, analytics screen, SQL aggregation, SVG chart | `includes/analytics/`, `includes/admin/class-analytics-page.php` |
 | Examples 1–9 | `tests/engine-test.php` (all green) |
-| Bonus: checkout breakdown, unit tests | included |
+| Bonus: checkout breakdown, usage limit, unit tests, popup A/B | all four included |
