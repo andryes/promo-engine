@@ -69,7 +69,11 @@ class Meta_Boxes {
 	 * @param \WP_Post $post Promotion post.
 	 */
 	public function render( \WP_Post $post ): void {
-		$meta = static fn( string $key, $default = '' ) => (string) ( get_post_meta( $post->ID, $key, true ) ?: $default );
+		$meta = static function ( string $key, $default = '' ) use ( $post ): string {
+			$value = get_post_meta( $post->ID, $key, true );
+			// Only fall back when the meta is genuinely absent — '0' is a valid stored value.
+			return ( '' === $value || null === $value || false === $value ) ? (string) $default : (string) $value;
+		};
 
 		$status     = $meta( '_pe_status', 'active' );
 		$type       = $meta( '_pe_type', Promotion::TYPE_PERCENT );
