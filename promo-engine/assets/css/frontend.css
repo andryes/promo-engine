@@ -95,17 +95,24 @@
 	font-weight: 600;
 }
 
-.pe-checkout-savings-line th,
-.pe-checkout-savings-line td {
+.pe-checkout-savings__list {
+	margin: 6px 0 0;
+	padding: 0;
+	list-style: none;
 	font-size: 0.85em;
 	font-weight: 400;
 	color: #555;
-	border-top: 0;
-	padding-top: 0;
 }
 
-.pe-checkout-savings-line__name {
-	padding-left: 1.2em;
+.pe-checkout-savings__list li {
+	display: flex;
+	justify-content: space-between;
+	gap: 16px;
+	margin: 2px 0;
+}
+
+.pe-checkout-savings__amount {
+	white-space: nowrap;
 }
 
 /* --- Deals page ------------------------------------------------------- */
