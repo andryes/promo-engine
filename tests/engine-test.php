@@ -180,6 +180,7 @@ $cart4 = array(
 $r = $engine->calculate( $cart4, array( promo_bogo() ), $now );
 check( 'ex4: BOGO subtotal = 228.00', 228.00, $r->subtotal );
 check( 'ex4: $90 item is free', 0.0, $r->line( 'line-22' )->unit_price );
+check( 'ex4: paid BOGO lines marked as participating', 1.0, (float) isset( $r->line( 'line-21' )->applied[3], $r->line( 'line-23' )->applied[3] ) );
 
 // 5. Same, but the $120 item is also under Promo 2 (−30%) → 84;
 //    cheapest of {108, 90, 84} = 84 free → 108 + 90 = $198.

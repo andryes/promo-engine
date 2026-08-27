@@ -195,9 +195,13 @@ class Cart_Hooks {
 		}
 
 		$line_discounts = array();
+		$line_promos    = array();
 		foreach ( $result->lines as $line ) {
 			if ( $line->discounts ) {
 				$line_discounts[ $line->key ] = $line->discounts;
+			}
+			if ( $line->applied ) {
+				$line_promos[ $line->key ] = array_keys( $line->applied );
 			}
 		}
 
@@ -212,6 +216,7 @@ class Cart_Hooks {
 				'subtotal'             => $result->subtotal,
 				'total_saved'          => $result->total_saved(),
 				'line_discounts'       => $line_discounts,
+				'line_promos'          => $line_promos,
 			)
 		);
 	}

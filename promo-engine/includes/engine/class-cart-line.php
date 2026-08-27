@@ -79,6 +79,15 @@ class Cart_Line {
 	public array $discounts = array();
 
 	/**
+	 * Promotions this line participated in (includes group promotions that
+	 * consumed the line's units without discounting them — e.g. the paid
+	 * part of a BOGO group): promo_id => true.
+	 *
+	 * @var array<int, bool>
+	 */
+	public array $applied = array();
+
+	/**
 	 * Build an instance from an associative array.
 	 *
 	 * @param array<string, mixed> $data Field values.
@@ -108,6 +117,17 @@ class Cart_Line {
 			return;
 		}
 		$this->discounts[ $promo_id ] = ( $this->discounts[ $promo_id ] ?? 0.0 ) + $amount;
+		$this->applied[ $promo_id ]   = true;
+	}
+
+	/**
+	 * Mark the line as participating in a promotion (even with no discount
+	 * on this particular line).
+	 *
+	 * @param int $promo_id Promotion ID.
+	 */
+	public function mark_applied( int $promo_id ): void {
+		$this->applied[ $promo_id ] = true;
 	}
 
 	/**

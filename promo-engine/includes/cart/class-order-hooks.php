@@ -54,6 +54,10 @@ class Order_Hooks {
 		if ( $line ) {
 			$item->update_meta_data( '_pe_discounts', $line );
 		}
+		$promos = $summary['line_promos'][ $cart_item_key ] ?? null;
+		if ( $promos ) {
+			$item->update_meta_data( '_pe_promos', $promos );
+		}
 	}
 
 	/**
@@ -94,11 +98,12 @@ class Order_Hooks {
 			if ( ! $item instanceof \WC_Order_Item_Product ) {
 				continue;
 			}
-			$discounts = $item->get_meta( '_pe_discounts' );
-			if ( ! is_array( $discounts ) ) {
-				continue;
+			$promos = $item->get_meta( '_pe_promos' );
+			if ( ! is_array( $promos ) || ! $promos ) {
+				$discounts = $item->get_meta( '_pe_discounts' );
+				$promos    = is_array( $discounts ) ? array_keys( $discounts ) : array();
 			}
-			foreach ( array_keys( $discounts ) as $promo_id ) {
+			foreach ( $promos as $promo_id ) {
 				$revenue_by_promo[ (int) $promo_id ] = ( $revenue_by_promo[ (int) $promo_id ] ?? 0.0 ) + (float) $item->get_total();
 			}
 		}

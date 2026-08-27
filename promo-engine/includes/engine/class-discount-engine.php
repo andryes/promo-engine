@@ -296,6 +296,7 @@ class Discount_Engine {
 
 		foreach ( $consumed as $position => $unit_index ) {
 			$units[ $unit_index ]['consumed'] = true;
+			$lines[ $units[ $unit_index ]['line'] ]->mark_applied( $promo->id );
 			if ( $position < $free_count ) {
 				$entering = $units[ $unit_index ]['price'];
 				$discount = $entering;
@@ -348,6 +349,7 @@ class Discount_Engine {
 
 			$factor = $promo->bundle_price / $sum;
 			foreach ( $members as $unit_index ) {
+				$lines[ $units[ $unit_index ]['line'] ]->mark_applied( $promo->id );
 				$entering = $units[ $unit_index ]['price'];
 				$discount = $entering * ( 1 - $factor );
 				if ( null !== $promo->cap_percent ) {
