@@ -152,8 +152,11 @@ class Discount_Engine {
 				if ( Promotion::TYPE_PERCENT === $promo->type ) {
 					$discount = $price * $promo->amount / 100;
 				} else {
-					$discount = min( $promo->amount, $price );
+					$discount = $promo->amount;
 				}
+				// Never discount more than the remaining price (covers percent > 100),
+				// so recorded per-promo discounts always sum to the actual reduction.
+				$discount = min( $discount, $price );
 				if ( $discount <= 0 ) {
 					continue;
 				}
@@ -383,25 +386,36 @@ class Discount_Engine {
 			return;
 		}
 
-		$applied  = $this->resolve_competition( $cart_promos );
 		$subtotal = $result->subtotal_before_cart;
 		$current  = $subtotal;
 
-		foreach ( $applied as $promo ) {
-			$tier = $promo->matched_tier( $subtotal );
-
-			// Progress hint towards the next tier of the winning promotion.
-			$next = $promo->next_tier( $subtotal );
-			if ( $next && null === $result->next_tier ) {
+		// Progress hint towards the next tier of the overall competition winner.
+		$overall = $this->resolve_competition( $cart_promos );
+		if ( $overall ) {
+			$next = $overall[0]->next_tier( $subtotal );
+			if ( $next ) {
 				$result->next_tier = array(
-					'promo_id' => $promo->id,
-					'name'     => $promo->name,
+					'promo_id' => $overall[0]->id,
+					'name'     => $overall[0]->name,
 					'min'      => $next['min'],
 					'percent'  => $next['percent'],
 					'missing'  => $next['min'] - $subtotal,
 				);
 			}
+		}
 
+		// A promotion whose lowest tier is not reached is inert: it must not
+		// win the competition and thereby block other cart promotions.
+		$reached = array_values(
+			array_filter(
+				$cart_promos,
+				static fn( Promotion $p ): bool => null !== $p->matched_tier( $subtotal )
+			)
+		);
+		$applied = $this->resolve_competition( $reached );
+
+		foreach ( $applied as $promo ) {
+			$tier = $promo->matched_tier( $subtotal );
 			if ( ! $tier ) {
 				continue;
 			}

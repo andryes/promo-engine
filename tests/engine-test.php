@@ -326,6 +326,50 @@ $limited->used_count  = 4;
 $r = $engine->calculate( array( line( 61, 159, array( CAT1 ) ) ), array( $limited ), $now );
 check( 'usage: promo under limit applies', 127.20, $r->lines[0]->unit_price );
 
+// Percent over 100 is clamped: price floors at 0 and recorded discounts
+// match the actual reduction (no inflated analytics numbers).
+$over = Promotion::from_array( array(
+	'id'         => 13,
+	'name'       => '−150%',
+	'type'       => Promotion::TYPE_PERCENT,
+	'amount'     => 150.0,
+	'priority'   => 1,
+	'stacking'   => true,
+	'scope_type' => Promotion::SCOPE_CATALOG,
+) );
+$r = $engine->calculate( array( line( 62, 100 ) ), array( $over ), $now );
+check( 'clamp: percent > 100 floors price at 0', 0.00, $r->lines[0]->unit_price );
+check( 'clamp: recorded discount equals actual reduction', 100.00, array_sum( $r->lines[0]->discounts ) );
+
+// Same overshoot with a cap: the cap wins and the recorded discount matches it.
+$over_capped              = Promotion::from_array( array(
+	'id'          => 15,
+	'name'        => '−150% capped 70',
+	'type'        => Promotion::TYPE_PERCENT,
+	'amount'      => 150.0,
+	'priority'    => 1,
+	'stacking'    => true,
+	'cap_percent' => 70.0,
+	'scope_type'  => Promotion::SCOPE_CATALOG,
+) );
+$r = $engine->calculate( array( line( 64, 100 ) ), array( $over_capped ), $now );
+check( 'clamp: overshoot with cap charges 30', 30.00, $r->lines[0]->unit_price );
+check( 'clamp: overshoot with cap records 70', 70.00, array_sum( $r->lines[0]->discounts ) );
+
+// An exclusive cart promo whose threshold is NOT reached is inert and must
+// not block a stacking cart promo whose tier IS reached.
+$vip = Promotion::from_array( array(
+	'id'       => 14,
+	'name'     => 'VIP −25% over $500',
+	'type'     => Promotion::TYPE_CART,
+	'priority' => 50,
+	'stacking' => false,
+	'tiers'    => array( array( 'min' => 500.0, 'percent' => 25.0 ) ),
+) );
+$r = $engine->calculate( array( line( 63, 228 ) ), array( $vip, promo_cart_tiers() ), $now );
+check( 'cart: unreached exclusive tier does not block others', 205.20, $r->subtotal );
+check( 'cart: progress hint follows the competition winner', 500.00, $r->next_tier['min'] );
+
 // BOGO within a single line, qty 3 → one unit free, price averaged.
 $r = $engine->calculate( array( line( 57, 90, array( CAT2 ), 3 ) ), array( promo_bogo() ), $now );
 check( 'bogo: qty 3 of one product → line total 180', 180.00, $r->lines[0]->total() );
