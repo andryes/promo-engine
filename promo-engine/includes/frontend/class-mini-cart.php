@@ -76,7 +76,7 @@ class Mini_Cart {
 		$percent = $target > 0 ? min( 100, $current / $target * 100 ) : 0;
 		?>
 		<div class="pe-progress">
-			<p class="pe-progress__label">
+			<p class="pe-progress__label" id="pe-progress-label">
 				<?php
 				printf(
 					/* translators: 1: missing amount, 2: discount percent. */
@@ -86,7 +86,7 @@ class Mini_Cart {
 				);
 				?>
 			</p>
-			<div class="pe-progress__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="<?php echo esc_attr( (string) round( $percent ) ); ?>">
+			<div class="pe-progress__bar" role="progressbar" aria-labelledby="pe-progress-label" aria-valuemin="0" aria-valuemax="100" aria-valuenow="<?php echo esc_attr( (string) round( $percent ) ); ?>">
 				<span class="pe-progress__fill" style="width: <?php echo esc_attr( (string) round( $percent, 1 ) ); ?>%"></span>
 			</div>
 		</div>
