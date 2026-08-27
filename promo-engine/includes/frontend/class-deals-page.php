@@ -59,7 +59,9 @@ class Deals_Page {
 		);
 
 		ob_start();
-		echo '<div class="pe-deals">';
+		// The .woocommerce class activates WooCommerce's own product-grid
+		// styles on this regular page; .pe-deals adds a theme-independent grid.
+		echo '<div class="pe-deals woocommerce">';
 		foreach ( $promos as $promo ) {
 			$this->render_promo( $promo );
 		}
