@@ -293,6 +293,11 @@ class Cart_Hooks {
 	 * @return string
 	 */
 	public function item_name_badges( string $name, array $cart_item, string $key ): string {
+		// The checkout review is cramped (and themes restyle it heavily) and
+		// already shows the per-promotion savings breakdown — skip badges there.
+		if ( is_checkout() ) {
+			return $name;
+		}
 		$line = $this->result_line( $key );
 		if ( ! $line || ! $line->discounts || ! self::$last_result ) {
 			return $name;
