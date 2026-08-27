@@ -1,0 +1,243 @@
+/* Promo Engine frontend styles. */
+
+/* --- Cart line badges ------------------------------------------------- */
+
+.pe-item-badges {
+	display: block;
+	margin-top: 2px;
+}
+
+.pe-badge-inline {
+	display: inline-block;
+	padding: 1px 7px;
+	margin: 2px 4px 0 0;
+	border-radius: 10px;
+	background: #e7f5ea;
+	color: #1d7a30;
+	font-size: 0.72em;
+	line-height: 1.6;
+	white-space: nowrap;
+}
+
+/* --- Mini-cart summary ------------------------------------------------ */
+
+.pe-minicart {
+	padding: 10px 0;
+	border-top: 1px solid rgba( 0, 0, 0, 0.08 );
+	font-size: 0.9em;
+}
+
+.pe-minicart__saved {
+	margin: 0 0 6px;
+	font-weight: 600;
+	color: #1d7a30;
+}
+
+.pe-minicart__promos {
+	list-style: none;
+	margin: 0 0 8px;
+	padding: 0;
+}
+
+.pe-minicart__promos li {
+	display: flex;
+	justify-content: space-between;
+	gap: 8px;
+	margin: 2px 0;
+}
+
+.pe-minicart__promo-amount {
+	color: #1d7a30;
+	white-space: nowrap;
+}
+
+.pe-progress__label {
+	margin: 6px 0 4px;
+}
+
+.pe-progress__bar {
+	height: 8px;
+	border-radius: 4px;
+	background: rgba( 0, 0, 0, 0.08 );
+	overflow: hidden;
+}
+
+.pe-progress__fill {
+	display: block;
+	height: 100%;
+	border-radius: 4px;
+	background: #1d7a30;
+	transition: width 0.3s ease;
+}
+
+@media ( prefers-reduced-motion: reduce ) {
+	.pe-progress__fill {
+		transition: none;
+	}
+}
+
+/* --- Cart/checkout savings rows --------------------------------------- */
+
+.pe-cart-savings th,
+.pe-checkout-savings th {
+	font-weight: 600;
+}
+
+.pe-cart-savings td,
+.pe-checkout-savings td {
+	color: #1d7a30;
+	font-weight: 600;
+}
+
+.pe-checkout-savings-line th,
+.pe-checkout-savings-line td {
+	font-size: 0.85em;
+	font-weight: 400;
+	color: #555;
+	border-top: 0;
+	padding-top: 0;
+}
+
+.pe-checkout-savings-line__name {
+	padding-left: 1.2em;
+}
+
+/* --- Deals page ------------------------------------------------------- */
+
+.pe-deals {
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+}
+
+.pe-deal__header {
+	margin-bottom: 12px;
+}
+
+.pe-deal__title {
+	margin: 0 0 4px;
+}
+
+.pe-deal__meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px 16px;
+	margin: 0;
+	color: #555;
+}
+
+.pe-deal__rule {
+	font-weight: 600;
+	color: #1d7a30;
+}
+
+.pe-deal__tiers {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.pe-deal__tiers li {
+	padding: 6px 0;
+	border-bottom: 1px dashed rgba( 0, 0, 0, 0.12 );
+}
+
+/* --- Popup ------------------------------------------------------------ */
+
+.pe-popup {
+	position: fixed;
+	inset: 0;
+	z-index: 100000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+}
+
+.pe-popup[hidden] {
+	display: none;
+}
+
+.pe-popup__overlay {
+	position: absolute;
+	inset: 0;
+	background: rgba( 0, 0, 0, 0.55 );
+}
+
+.pe-popup__box {
+	position: relative;
+	max-width: 420px;
+	width: 100%;
+	background: #fff;
+	color: #222;
+	border-radius: 10px;
+	padding: 36px 28px 28px;
+	text-align: center;
+	box-shadow: 0 20px 60px rgba( 0, 0, 0, 0.3 );
+	animation: pe-popup-in 0.25s ease-out;
+}
+
+@keyframes pe-popup-in {
+	from {
+		opacity: 0;
+		transform: translateY( 14px );
+	}
+
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+@media ( prefers-reduced-motion: reduce ) {
+	.pe-popup__box {
+		animation: none;
+	}
+}
+
+.pe-popup__close {
+	position: absolute;
+	top: 8px;
+	right: 12px;
+	border: 0;
+	background: none;
+	font-size: 28px;
+	line-height: 1;
+	cursor: pointer;
+	color: #777;
+	padding: 4px 8px;
+}
+
+.pe-popup__close:hover,
+.pe-popup__close:focus {
+	color: #000;
+}
+
+.pe-popup__discount {
+	margin: 0;
+	font-size: 44px;
+	font-weight: 800;
+	color: #c9271e;
+	line-height: 1.1;
+}
+
+.pe-popup__title {
+	margin: 8px 0 4px;
+	font-size: 22px;
+}
+
+.pe-popup__timer {
+	margin: 10px 0 0;
+	font-size: 26px;
+	font-variant-numeric: tabular-nums;
+	font-weight: 700;
+	color: #222;
+}
+
+.pe-popup__cta {
+	margin: 18px 0 0;
+}
+
+body.pe-popup-open {
+	overflow: hidden;
+}
