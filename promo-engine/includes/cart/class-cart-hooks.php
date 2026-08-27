@@ -189,7 +189,9 @@ class Cart_Hooks {
 			return;
 		}
 
-		if ( ! $result || ! $result->promo_totals ) {
+		// Keep the summary when there is a next-tier hint even with no
+		// discount applied yet — the mini-cart progress bar needs it.
+		if ( ! $result || ( ! $result->promo_totals && ! $result->next_tier ) ) {
 			WC()->session->set( self::SESSION_KEY, array() );
 			return;
 		}
