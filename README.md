@@ -133,6 +133,11 @@ combination rule applies **among promotions competing within the same stage**:
   averaged unit price.
 - **Sale prices**: discounts always start from the current (sale) price, per the
   spec.
+- **Service add-ons are not promotion targets**: cart lines flagged as services
+  (e.g. the payment add-on's "Order Protection", marked with an
+  `order_protection` cart item key) receive no discounts and do not count
+  toward cart-threshold tiers. Extensible via the `promo_engine_skip_cart_item`
+  filter.
 
 ### Promotions storage & admin (Part 1)
 
