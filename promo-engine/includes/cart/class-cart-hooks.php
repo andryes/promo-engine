@@ -151,6 +151,20 @@ class Cart_Hooks {
 				continue;
 			}
 
+			/**
+			 * Skip service add-ons: they neither receive promotion discounts
+			 * nor count toward cart-threshold tiers. By default this excludes
+			 * "Order Protection" lines (flagged by the payment add-on with an
+			 * order_protection cart item key).
+			 *
+			 * @param bool                 $skip Whether to exclude the line.
+			 * @param array<string, mixed> $item Cart item.
+			 * @param string               $key  Cart item key.
+			 */
+			if ( apply_filters( 'promo_engine_skip_cart_item', ! empty( $item['order_protection'] ), $item, $key ) ) {
+				continue;
+			}
+
 			// Capture the untouched (sale-aware) price once per request.
 			if ( ! isset( self::$base_prices[ $key ] ) ) {
 				self::$base_prices[ $key ] = (float) $product->get_price();

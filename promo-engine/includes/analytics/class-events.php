@@ -47,7 +47,7 @@ class Events {
 	 * Hook the add-to-cart logger.
 	 */
 	public function register(): void {
-		add_action( 'woocommerce_add_to_cart', array( $this, 'log_add_to_cart' ), 10, 4 );
+		add_action( 'woocommerce_add_to_cart', array( $this, 'log_add_to_cart' ), 10, 6 );
 	}
 
 	/**
@@ -137,12 +137,18 @@ class Events {
 	/**
 	 * Log an add_to_cart event for every running promotion covering the product.
 	 *
-	 * @param string $cart_item_key Cart item key.
-	 * @param int    $product_id    Product ID.
-	 * @param int    $quantity      Quantity.
-	 * @param int    $variation_id  Variation ID.
+	 * @param string               $cart_item_key  Cart item key.
+	 * @param int                  $product_id     Product ID.
+	 * @param int                  $quantity       Quantity.
+	 * @param int                  $variation_id   Variation ID.
+	 * @param array<string, mixed> $variation      Variation attributes.
+	 * @param array<string, mixed> $cart_item_data Custom cart item data.
 	 */
-	public function log_add_to_cart( string $cart_item_key, int $product_id, int $quantity, int $variation_id = 0 ): void {
+	public function log_add_to_cart( string $cart_item_key, int $product_id, int $quantity, int $variation_id = 0, $variation = array(), $cart_item_data = array() ): void {
+		// Service add-ons (e.g. Order Protection) are not promotion targets.
+		if ( apply_filters( 'promo_engine_skip_cart_item', ! empty( $cart_item_data['order_protection'] ), (array) $cart_item_data, $cart_item_key ) ) {
+			return;
+		}
 		$line = Cart_Line::from_array(
 			array(
 				'product_id'   => $variation_id ? $variation_id : $product_id,
