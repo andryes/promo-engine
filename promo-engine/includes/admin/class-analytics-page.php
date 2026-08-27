@@ -379,13 +379,20 @@ class Analytics_Page {
 		<div class="pe-chart-card">
 			<svg viewBox="0 0 <?php echo (int) $width; ?> <?php echo (int) $height; ?>" role="img"
 				aria-label="<?php esc_attr_e( 'Daily promo events', 'promo-engine' ); ?>" class="pe-chart">
-				<?php for ( $g = 0; $g <= 4; $g++ ) : ?>
-					<?php $gy = $pad_t + $plot_h - ( $g / 4 * $plot_h ); ?>
+				<?php
+				$printed_labels = array();
+				for ( $g = 0; $g <= 4; $g++ ) :
+					$gy    = $pad_t + $plot_h - ( $g / 4 * $plot_h );
+					$label = (int) round( $max * $g / 4 );
+					?>
 					<line x1="<?php echo (int) $pad_l; ?>" y1="<?php echo esc_attr( (string) round( $gy, 1 ) ); ?>"
 						x2="<?php echo (int) ( $width - $pad_r ); ?>" y2="<?php echo esc_attr( (string) round( $gy, 1 ) ); ?>"
 						stroke="#dcdcde" stroke-width="1" />
-					<text x="<?php echo (int) ( $pad_l - 6 ); ?>" y="<?php echo esc_attr( (string) round( $gy + 4, 1 ) ); ?>"
-						text-anchor="end" font-size="11" fill="#646970"><?php echo (int) round( $max * $g / 4 ); ?></text>
+					<?php if ( ! in_array( $label, $printed_labels, true ) ) : ?>
+						<text x="<?php echo (int) ( $pad_l - 6 ); ?>" y="<?php echo esc_attr( (string) round( $gy + 4, 1 ) ); ?>"
+							text-anchor="end" font-size="11" fill="#646970"><?php echo (int) $label; ?></text>
+					<?php endif; ?>
+					<?php $printed_labels[] = $label; ?>
 				<?php endfor; ?>
 
 				<?php foreach ( $days as $i => $day ) : ?>
