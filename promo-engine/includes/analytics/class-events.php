@@ -102,6 +102,15 @@ class Events {
 			return;
 		}
 
+		/**
+		 * Allows muting analytics writes (e.g. for smoke tests / staging checks).
+		 *
+		 * @param bool $disabled Default false.
+		 */
+		if ( apply_filters( 'promo_engine_disable_tracking', false ) ) {
+			return;
+		}
+
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- custom analytics table, write path.
 		$wpdb->insert(
 			self::table(),
