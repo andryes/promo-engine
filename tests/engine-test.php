@@ -312,6 +312,20 @@ $future->starts_at = $now + 10;
 $r = $engine->calculate( array( line( 56, 159, array( CAT1 ) ) ), array( $future ), $now );
 check( 'dates: future promo ignored', 159.00, $r->lines[0]->unit_price );
 
+// Usage limit: an exhausted promotion is ignored.
+$limited              = promo_cat1_20();
+$limited->usage_limit = 5;
+$limited->used_count  = 5;
+$r = $engine->calculate( array( line( 60, 159, array( CAT1 ) ) ), array( $limited ), $now );
+check( 'usage: exhausted promo ignored', 159.00, $r->lines[0]->unit_price );
+
+// Usage limit: a promotion with uses left still applies (0 = unlimited).
+$limited              = promo_cat1_20();
+$limited->usage_limit = 5;
+$limited->used_count  = 4;
+$r = $engine->calculate( array( line( 61, 159, array( CAT1 ) ) ), array( $limited ), $now );
+check( 'usage: promo under limit applies', 127.20, $r->lines[0]->unit_price );
+
 // BOGO within a single line, qty 3 → one unit free, price averaged.
 $r = $engine->calculate( array( line( 57, 90, array( CAT2 ), 3 ) ), array( promo_bogo() ), $now );
 check( 'bogo: qty 3 of one product → line total 180', 180.00, $r->lines[0]->total() );

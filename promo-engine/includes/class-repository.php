@@ -70,7 +70,7 @@ class Repository {
 		return array_values(
 			array_filter(
 				$this->get_active(),
-				static fn( Promotion $p ): bool => $p->is_running( $now )
+				static fn( Promotion $p ): bool => $p->is_running( $now ) && $p->has_uses_left()
 			)
 		);
 	}
@@ -189,6 +189,8 @@ class Repository {
 			'starts_at'     => $this->to_timestamp( (string) $meta( '_pe_starts' ) ),
 			'ends_at'       => $this->to_timestamp( (string) $meta( '_pe_ends' ) ),
 			'popup_enabled' => '1' === (string) $meta( '_pe_popup' ),
+			'usage_limit'   => max( 0, (int) $meta( '_pe_usage_limit' ) ),
+			'used_count'    => max( 0, (int) $meta( '_pe_used_count' ) ),
 		);
 	}
 

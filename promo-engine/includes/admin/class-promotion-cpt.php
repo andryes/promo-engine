@@ -74,6 +74,7 @@ class Promotion_CPT {
 			'pe_priority' => __( 'Priority', 'promo-engine' ),
 			'pe_stacking' => __( 'Stacking', 'promo-engine' ),
 			'pe_period'   => __( 'Period', 'promo-engine' ),
+			'pe_usage'    => __( 'Usage', 'promo-engine' ),
 		);
 	}
 
@@ -143,6 +144,20 @@ class Promotion_CPT {
 				echo '0' !== (string) get_post_meta( $post_id, '_pe_stacking', true )
 					? esc_html__( 'Combines', 'promo-engine' )
 					: esc_html__( 'Exclusive', 'promo-engine' );
+				break;
+
+			case 'pe_usage':
+				$used  = (int) get_post_meta( $post_id, '_pe_used_count', true );
+				$limit = (int) get_post_meta( $post_id, '_pe_usage_limit', true );
+				if ( $limit > 0 ) {
+					echo esc_html( $used . ' / ' . $limit );
+					if ( $used >= $limit ) {
+						echo ' <span class="pe-badge pe-badge--paused">' . esc_html__( 'Exhausted', 'promo-engine' ) . '</span>';
+					}
+				} else {
+					/* translators: %d: number of orders that used the promotion. */
+					echo esc_html( sprintf( __( '%d / ∞', 'promo-engine' ), $used ) );
+				}
 				break;
 
 			case 'pe_period':

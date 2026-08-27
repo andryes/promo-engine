@@ -51,7 +51,7 @@ class Discount_Engine {
 		$running = array_values(
 			array_filter(
 				$promos,
-				static fn( Promotion $p ): bool => $p->is_running( $now )
+				static fn( Promotion $p ): bool => $p->is_running( $now ) && $p->has_uses_left()
 			)
 		);
 

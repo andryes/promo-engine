@@ -120,6 +120,21 @@ class Meta_Boxes {
 				</td>
 			</tr>
 			<tr>
+				<th><label for="pe_usage_limit"><?php esc_html_e( 'Usage limit (orders)', 'promo-engine' ); ?></label></th>
+				<td>
+					<input type="number" name="_pe_usage_limit" id="pe_usage_limit" value="<?php echo esc_attr( '0' === $meta( '_pe_usage_limit', '0' ) ? '' : $meta( '_pe_usage_limit' ) ); ?>" step="1" min="0" class="small-text" />
+					<p class="description">
+						<?php
+						printf(
+							/* translators: %d: number of orders that used this promotion. */
+							esc_html__( 'The promotion stops applying after this many orders. Empty = unlimited. Used so far: %d.', 'promo-engine' ),
+							(int) $meta( '_pe_used_count', '0' )
+						);
+						?>
+					</p>
+				</td>
+			</tr>
+			<tr>
 				<th><label for="pe_type"><?php esc_html_e( 'Discount type', 'promo-engine' ); ?></label></th>
 				<td>
 					<select name="_pe_type" id="pe_type">
@@ -366,6 +381,8 @@ class Meta_Boxes {
 		update_post_meta( $post_id, '_pe_ends', $this->sanitize_datetime( (string) $in( '_pe_ends' ) ) );
 
 		update_post_meta( $post_id, '_pe_popup', ( '1' === $in( '_pe_popup' ) ) ? '1' : '0' );
+
+		update_post_meta( $post_id, '_pe_usage_limit', max( 0, (int) $in( '_pe_usage_limit' ) ) );
 	}
 
 	/**
