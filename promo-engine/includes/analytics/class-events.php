@@ -47,7 +47,7 @@ class Events {
 	 * Hook the add-to-cart logger.
 	 */
 	public function register(): void {
-		add_action( 'woocommerce_add_to_cart', array( $this, 'log_add_to_cart' ), 10, 6 );
+		add_action( 'woocommerce_add_to_cart', array( $this, 'log_add_to_cart' ), 10, 4 );
 	}
 
 	/**
