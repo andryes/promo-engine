@@ -18,10 +18,12 @@
 		if ( variant ) {
 			data.append( 'variant', variant );
 		}
+		var queued = false;
 		if ( navigator.sendBeacon ) {
-			navigator.sendBeacon( cfg.ajaxUrl, data );
-		} else {
-			fetch( cfg.ajaxUrl, { method: 'POST', body: data, credentials: 'same-origin' } );
+			queued = navigator.sendBeacon( cfg.ajaxUrl, data );
+		}
+		if ( ! queued ) {
+			fetch( cfg.ajaxUrl, { method: 'POST', body: data, credentials: 'same-origin', keepalive: true } );
 		}
 	}
 
@@ -53,6 +55,7 @@
 
 		var timer = window.setInterval( tick, 1000 );
 		tick();
+		return timer;
 	}
 
 	function initPopup() {
@@ -73,6 +76,7 @@
 		}
 
 		var lastFocused = null;
+		var countdownTimer = null;
 
 		// A/B test: variant B headline configured → split visitors 50/50,
 		// remember the assignment for the session, report it with beacons.
@@ -117,6 +121,13 @@
 			}
 			var first = items[ 0 ];
 			var last = items[ items.length - 1 ];
+			// If focus escaped the dialog (e.g. a click landed on <body>),
+			// pull it back in instead of letting Tab walk the page.
+			if ( ! popup.contains( document.activeElement ) ) {
+				e.preventDefault();
+				first.focus();
+				return;
+			}
 			if ( e.shiftKey && document.activeElement === first ) {
 				e.preventDefault();
 				last.focus();
@@ -130,6 +141,10 @@
 			popup.hidden = true;
 			document.body.classList.remove( 'pe-popup-open' );
 			document.removeEventListener( 'keydown', onKeydown, true );
+			if ( countdownTimer ) {
+				window.clearInterval( countdownTimer );
+				countdownTimer = null;
+			}
 			if ( lastFocused && lastFocused.focus ) {
 				lastFocused.focus();
 			}
@@ -153,7 +168,7 @@
 
 			var timerEl = popup.querySelector( '[data-pe-countdown]' );
 			if ( timerEl && cfg.popup.ends ) {
-				startCountdown( timerEl, cfg.popup.ends );
+				countdownTimer = startCountdown( timerEl, cfg.popup.ends );
 			}
 
 			track( 'view', cfg.popup.id, variant );
