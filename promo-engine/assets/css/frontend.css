@@ -19,6 +19,12 @@
 	white-space: nowrap;
 }
 
+/* The checkout order summary is cramped and already carries the
+   "Promo savings" breakdown rows — hide per-item badges there. */
+.woocommerce-checkout .pe-item-badges {
+	display: none;
+}
+
 /* --- Mini-cart summary ------------------------------------------------ */
 
 .pe-minicart {
@@ -140,6 +146,36 @@
 .pe-deal__tiers li {
 	padding: 6px 0;
 	border-bottom: 1px dashed rgba( 0, 0, 0, 0.12 );
+}
+
+/* Theme-independent product grid: the deals page is a regular WP page, so
+   neither the theme's shop grid nor (without the .woocommerce wrapper)
+   WooCommerce's own column styles apply to the product loop by default. */
+.pe-deals ul.products {
+	display: grid;
+	grid-template-columns: repeat( auto-fill, minmax( 230px, 1fr ) );
+	gap: 28px 24px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.pe-deals ul.products::before,
+.pe-deals ul.products::after {
+	content: none; /* Neutralize WooCommerce clearfix pseudo-elements. */
+}
+
+.pe-deals ul.products li.product {
+	width: auto !important;
+	margin: 0 !important;
+	float: none !important;
+	list-style: none;
+}
+
+.pe-deals ul.products li.product img {
+	width: 100%;
+	height: auto;
+	display: block;
 }
 
 /* --- Popup ------------------------------------------------------------ */
