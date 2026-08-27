@@ -52,8 +52,26 @@ class Promotion_CPT {
 				'menu_position'   => 56,
 				'menu_icon'       => 'dashicons-megaphone',
 				'supports'        => array( 'title' ),
+				// Promotions change storefront prices — restrict every operation
+				// to users who can manage the store (admins, shop managers).
 				'capability_type' => 'post',
-				'map_meta_cap'    => true,
+				'map_meta_cap'    => false,
+				'capabilities'    => array(
+					'edit_post'              => 'manage_woocommerce',
+					'read_post'              => 'manage_woocommerce',
+					'delete_post'            => 'manage_woocommerce',
+					'edit_posts'             => 'manage_woocommerce',
+					'edit_others_posts'      => 'manage_woocommerce',
+					'publish_posts'          => 'manage_woocommerce',
+					'read_private_posts'     => 'manage_woocommerce',
+					'delete_posts'           => 'manage_woocommerce',
+					'delete_others_posts'    => 'manage_woocommerce',
+					'delete_published_posts' => 'manage_woocommerce',
+					'delete_private_posts'   => 'manage_woocommerce',
+					'edit_published_posts'   => 'manage_woocommerce',
+					'edit_private_posts'     => 'manage_woocommerce',
+					'create_posts'           => 'manage_woocommerce',
+				),
 			)
 		);
 	}
