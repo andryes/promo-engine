@@ -57,7 +57,7 @@ class Demo_Seeder {
 					foreach ( $report as $line ) {
 						\WP_CLI::log( $line );
 					}
-					\WP_CLI::success( 'Demo promotions seeded.' );
+					\WP_CLI::success( __( 'Demo promotions seeded.', 'promo-engine' ) );
 				}
 			);
 		}
@@ -271,7 +271,7 @@ class Demo_Seeder {
 					'post_status' => 'publish',
 				)
 			);
-			$action = 'updated';
+			$action = __( 'updated', 'promo-engine' );
 		} else {
 			$post_id = (int) wp_insert_post(
 				array(
@@ -280,14 +280,15 @@ class Demo_Seeder {
 					'post_title'  => $title,
 				)
 			);
-			$action = 'created';
+			$action = __( 'created', 'promo-engine' );
 		}
 
 		foreach ( $meta as $meta_key => $value ) {
 			update_post_meta( $post_id, $meta_key, $value );
 		}
 
-		return sprintf( '%s: %s (#%d)', $action, $title, $post_id );
+		/* translators: 1: created/updated, 2: promotion title, 3: post ID. */
+		return sprintf( __( '%1$s: %2$s (#%3$d)', 'promo-engine' ), $action, $title, $post_id );
 	}
 
 	/**
@@ -298,14 +299,16 @@ class Demo_Seeder {
 	private function ensure_coupon(): string {
 		$code = 'SAVE10';
 		if ( wc_get_coupon_id_by_code( $code ) ) {
-			return 'exists: coupon ' . $code;
+			/* translators: %s: coupon code. */
+			return sprintf( __( 'exists: coupon %s', 'promo-engine' ), $code );
 		}
 		$coupon = new \WC_Coupon();
 		$coupon->set_code( $code );
 		$coupon->set_discount_type( 'percent' );
 		$coupon->set_amount( 10 );
 		$coupon->save();
-		return 'created: coupon ' . $code;
+		/* translators: %s: coupon code. */
+		return sprintf( __( 'created: coupon %s', 'promo-engine' ), $code );
 	}
 
 	/**
