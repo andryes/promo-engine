@@ -55,7 +55,12 @@ class Analytics_Page {
 		$promo_id = isset( $_GET['promo_id'] ) ? absint( wp_unslash( $_GET['promo_id'] ) ) : 0;
 		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
-		$valid = static fn( string $date ): bool => (bool) preg_match( '/^\d{4}-\d{2}-\d{2}$/', $date );
+		$valid = static function ( string $date ): bool {
+			if ( ! preg_match( '/^(\d{4})-(\d{2})-(\d{2})$/', $date, $m ) ) {
+				return false;
+			}
+			return checkdate( (int) $m[2], (int) $m[3], (int) $m[1] );
+		};
 		if ( ! $valid( $from ) ) {
 			$from = wp_date( 'Y-m-d', strtotime( '-29 days' ) );
 		}
