@@ -159,6 +159,20 @@ class Promotion {
 	public bool $popup_enabled = false;
 
 	/**
+	 * Max number of orders this promotion can be used in. 0 = unlimited.
+	 *
+	 * @var int
+	 */
+	public int $usage_limit = 0;
+
+	/**
+	 * How many orders have used this promotion so far.
+	 *
+	 * @var int
+	 */
+	public int $used_count = 0;
+
+	/**
 	 * Build an instance from an associative array (convenience for tests / repository).
 	 *
 	 * @param array<string, mixed> $data Field values.
@@ -188,6 +202,15 @@ class Promotion {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Whether the promotion is still under its usage limit.
+	 *
+	 * @return bool
+	 */
+	public function has_uses_left(): bool {
+		return $this->usage_limit <= 0 || $this->used_count < $this->usage_limit;
 	}
 
 	/**

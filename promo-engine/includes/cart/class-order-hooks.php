@@ -93,6 +93,13 @@ class Order_Hooks {
 		$order->update_meta_data( '_pe_events_logged', '1' );
 		$order->save();
 
+		// Count usage towards each promotion's usage limit.
+		foreach ( array_keys( $promo_totals ) as $promo_id ) {
+			$used = (int) get_post_meta( (int) $promo_id, '_pe_used_count', true );
+			update_post_meta( (int) $promo_id, '_pe_used_count', $used + 1 );
+		}
+		promo_engine()->repository->flush();
+
 		$revenue_by_promo = array();
 		foreach ( $order->get_items() as $item ) {
 			if ( ! $item instanceof \WC_Order_Item_Product ) {

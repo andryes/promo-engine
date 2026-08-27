@@ -150,8 +150,8 @@ class Demo_Seeder {
 				'_pe_cap'        => '70',
 				'_pe_scope_type' => Promotion::SCOPE_PRODUCTS,
 				'_pe_products'   => $flash_products,
-				'_pe_ends'       => $ends,
-				'_pe_popup'      => '1',
+				'_pe_ends'  => $ends,
+				'_pe_popup' => '1',
 			)
 		);
 
@@ -250,10 +250,11 @@ class Demo_Seeder {
 			'_pe_categories'   => array(),
 			'_pe_tags'         => array(),
 			'_pe_tiers'        => array(),
-			'_pe_starts'       => '',
-			'_pe_ends'         => '',
-			'_pe_popup'        => '0',
-			'_pe_demo_key'     => $key,
+			'_pe_starts'      => '',
+			'_pe_ends'        => '',
+			'_pe_popup'       => '0',
+			'_pe_usage_limit' => 0,
+			'_pe_demo_key'    => $key,
 		);
 		$meta     = array_merge( $defaults, $meta );
 
