@@ -1,0 +1,596 @@
+# Copyright (C) 2026 andryes
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Promo Engine 1.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/promo-engine\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-08-27T11:55:57+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: promo-engine\n"
+
+#. Plugin Name of the plugin
+#: promo-engine.php
+#: includes/admin/class-promotion-cpt.php:47
+msgid "Promo Engine"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: promo-engine.php
+msgid "https://github.com/andryes/promo-engine"
+msgstr ""
+
+#. Description of the plugin
+#: promo-engine.php
+msgid "Promotions engine for WooCommerce: percentage / fixed / BOGO / bundle / cart-threshold discounts with stacking rules, a deals page, promo popup, mini-cart savings and built-in analytics."
+msgstr ""
+
+#. Author of the plugin
+#: promo-engine.php
+msgid "andryes"
+msgstr ""
+
+#. Author URI of the plugin
+#: promo-engine.php
+msgid "https://github.com/andryes"
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:38
+#: includes/admin/class-analytics-page.php:243
+msgid "Promo analytics"
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:39
+msgid "Analytics"
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:222
+msgid "You are not allowed to view this page."
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:249
+#: includes/admin/class-analytics-page.php:273
+#: includes/admin/class-promotion-cpt.php:39
+#: includes/admin/class-promotion-cpt.php:88
+msgid "Promotion"
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:251
+msgid "All promotions"
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:258
+msgid "From"
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:262
+msgid "To"
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:265
+msgid "Filter"
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:274
+#: includes/admin/class-analytics-page.php:337
+#: includes/admin/class-analytics-page.php:418
+msgid "Popup views"
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:275
+#: includes/admin/class-analytics-page.php:338
+msgid "Popup clicks"
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:276
+#: includes/admin/class-analytics-page.php:339
+msgid "CTR"
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:277
+#: includes/admin/class-analytics-page.php:422
+msgid "Add to cart"
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:278
+#: includes/admin/class-analytics-page.php:426
+msgid "Orders"
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:279
+msgid "Revenue"
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:280
+msgid "Discount given"
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:281
+msgid "Conversion"
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:286
+msgid "No events recorded for this period."
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:320
+msgid "CTR = popup clicks / popup views. Conversion = orders / add-to-cart events."
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:328
+msgid "Variant A"
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:329
+msgid "Variant B"
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:332
+msgid "Popup A/B test"
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:336
+msgid "Variant"
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:361
+msgid "Top products (by add-to-cart)"
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:365
+msgid "Product"
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:366
+msgid "Added to cart"
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:373
+msgid "No add-to-cart events yet."
+msgstr ""
+
+#: includes/admin/class-analytics-page.php:453
+msgid "Daily promo events"
+msgstr ""
+
+#: includes/admin/class-demo-seeder.php:60
+msgid "Demo promotions seeded."
+msgstr ""
+
+#: includes/admin/class-demo-seeder.php:80
+msgid "Load demo promotions"
+msgstr ""
+
+#: includes/admin/class-demo-seeder.php:92
+msgid "Demo promotions and the SAVE10 coupon have been created/updated."
+msgstr ""
+
+#: includes/admin/class-demo-seeder.php:102
+msgid "You are not allowed to do this."
+msgstr ""
+
+#: includes/admin/class-demo-seeder.php:130
+msgid "Hoodies −20%"
+msgstr ""
+
+#: includes/admin/class-demo-seeder.php:144
+msgid "Flash Sale −30%"
+msgstr ""
+
+#: includes/admin/class-demo-seeder.php:155
+msgid "Flash Sale: −30% off"
+msgstr ""
+
+#: includes/admin/class-demo-seeder.php:156
+msgid "Hurry! 48 hours only — −30%"
+msgstr ""
+
+#: includes/admin/class-demo-seeder.php:162
+msgid "Shorts: Buy 2 Get 1 Free"
+msgstr ""
+
+#: includes/admin/class-demo-seeder.php:176
+msgid "T-Shirt Bundle: 2 for $250"
+msgstr ""
+
+#: includes/admin/class-demo-seeder.php:190
+msgid "Cart Savings: up to −20%"
+msgstr ""
+
+#: includes/admin/class-demo-seeder.php:274
+msgid "updated"
+msgstr ""
+
+#: includes/admin/class-demo-seeder.php:283
+msgid "created"
+msgstr ""
+
+#. translators: 1: created/updated, 2: promotion title, 3: post ID.
+#: includes/admin/class-demo-seeder.php:291
+#, php-format
+msgid "%1$s: %2$s (#%3$d)"
+msgstr ""
+
+#. translators: %s: coupon code.
+#: includes/admin/class-demo-seeder.php:303
+#, php-format
+msgid "exists: coupon %s"
+msgstr ""
+
+#. translators: %s: coupon code.
+#: includes/admin/class-demo-seeder.php:311
+#, php-format
+msgid "created: coupon %s"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:58
+msgid "Promotion settings"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:91
+#: includes/admin/class-promotion-cpt.php:89
+msgid "Status"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:94
+#: includes/admin/class-promotion-cpt.php:141
+msgid "Active"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:95
+#: includes/admin/class-promotion-cpt.php:141
+msgid "Paused"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:100
+#: includes/admin/class-promotion-cpt.php:92
+msgid "Priority"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:103
+msgid "Higher number wins when promotions compete. Ties are resolved by lower ID."
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:107
+msgid "Combination"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:110
+msgid "Combines with other promotions"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:111
+msgid "Does not combine (exclusive)"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:116
+msgid "Max discount cap, %"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:119
+msgid "Total discount on an item is clipped to this percent. Leave empty for no cap."
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:123
+msgid "Usage limit (orders)"
+msgstr ""
+
+#. translators: %d: number of orders that used this promotion.
+#: includes/admin/class-meta-boxes.php:130
+#, php-format
+msgid "The promotion stops applying after this many orders. Empty = unlimited. Used so far: %d."
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:138
+msgid "Discount type"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:149
+msgid "Amount"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:152
+msgid "Percent for percentage type; amount per unit for fixed type."
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:157
+#: includes/admin/class-promotion-cpt.php:108
+msgid "Buy X get Y"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:160
+msgid "Buy"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:164
+msgid "get free (cheapest)"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:171
+msgid "Bundle"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:174
+msgid "Items in bundle"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:178
+msgid "Bundle price"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:181
+msgid "Applied only when it lowers the total for the bundled items."
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:186
+msgid "Subtotal tiers"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:191
+msgid "Subtotal at least"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:192
+msgid "Discount, %"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:210
+msgid "Add tier"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:211
+msgid "Only the highest reached tier applies."
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:216
+#: includes/admin/class-promotion-cpt.php:91
+msgid "Applies to"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:227
+msgid "Products"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:230
+msgid "Search for products…"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:249
+#: includes/admin/class-promotion-cpt.php:122
+msgid "Categories"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:254
+#: includes/admin/class-promotion-cpt.php:123
+msgid "Tags"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:259
+msgid "Starts"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:262
+msgid "Site timezone. Empty = no start limit."
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:266
+msgid "Ends"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:269
+msgid "Site timezone. Empty = no end limit. The popup countdown uses this."
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:273
+msgid "Promo popup"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:277
+msgid "Show a popup with a countdown for this promotion (once per session, not on checkout)."
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:282
+msgid "Popup headline — variant A"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:285
+msgid "Empty = the promotion name is used."
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:289
+msgid "Popup headline — variant B (A/B test)"
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:292
+msgid "Fill in to run an A/B test: visitors are split 50/50 between the two headlines, and popup views/clicks are tracked per variant in Analytics."
+msgstr ""
+
+#: includes/admin/class-meta-boxes.php:314
+msgid "No terms found."
+msgstr ""
+
+#: includes/admin/class-promotion-cpt.php:38
+msgid "Promotions"
+msgstr ""
+
+#: includes/admin/class-promotion-cpt.php:40
+#: includes/admin/class-promotion-cpt.php:41
+msgid "Add promotion"
+msgstr ""
+
+#: includes/admin/class-promotion-cpt.php:42
+msgid "Edit promotion"
+msgstr ""
+
+#: includes/admin/class-promotion-cpt.php:43
+msgid "New promotion"
+msgstr ""
+
+#: includes/admin/class-promotion-cpt.php:44
+msgid "Search promotions"
+msgstr ""
+
+#: includes/admin/class-promotion-cpt.php:45
+msgid "No promotions found."
+msgstr ""
+
+#: includes/admin/class-promotion-cpt.php:46
+msgid "No promotions found in Trash."
+msgstr ""
+
+#: includes/admin/class-promotion-cpt.php:90
+msgid "Type"
+msgstr ""
+
+#: includes/admin/class-promotion-cpt.php:93
+msgid "Stacking"
+msgstr ""
+
+#: includes/admin/class-promotion-cpt.php:94
+msgid "Period"
+msgstr ""
+
+#: includes/admin/class-promotion-cpt.php:95
+msgid "Usage"
+msgstr ""
+
+#: includes/admin/class-promotion-cpt.php:106
+msgid "Percentage"
+msgstr ""
+
+#: includes/admin/class-promotion-cpt.php:107
+msgid "Fixed amount"
+msgstr ""
+
+#: includes/admin/class-promotion-cpt.php:109
+msgid "Bundle for fixed price"
+msgstr ""
+
+#: includes/admin/class-promotion-cpt.php:110
+#: includes/frontend/class-deals-page.php:127
+msgid "Cart discount by subtotal"
+msgstr ""
+
+#: includes/admin/class-promotion-cpt.php:121
+msgid "Selected products"
+msgstr ""
+
+#: includes/admin/class-promotion-cpt.php:124
+#: includes/admin/class-promotion-cpt.php:154
+msgid "Whole catalog"
+msgstr ""
+
+#: includes/admin/class-promotion-cpt.php:163
+msgid "Combines"
+msgstr ""
+
+#: includes/admin/class-promotion-cpt.php:164
+msgid "Exclusive"
+msgstr ""
+
+#: includes/admin/class-promotion-cpt.php:173
+msgid "Exhausted"
+msgstr ""
+
+#. translators: %d: number of orders that used the promotion.
+#: includes/admin/class-promotion-cpt.php:177
+#, php-format
+msgid "%d / ∞"
+msgstr ""
+
+#: includes/admin/class-promotion-cpt.php:185
+msgid "Always"
+msgstr ""
+
+#: includes/class-install.php:57
+msgid "Deals"
+msgstr ""
+
+#: includes/frontend/class-assets.php:79
+msgid "d"
+msgstr ""
+
+#: includes/frontend/class-assets.php:80
+msgid "The deal has ended"
+msgstr ""
+
+#: includes/frontend/class-checkout-summary.php:36
+#: includes/frontend/class-mini-cart.php:106
+#: includes/frontend/class-mini-cart.php:107
+msgid "Promo savings"
+msgstr ""
+
+#: includes/frontend/class-deals-page.php:53
+msgid "No active deals right now — check back soon!"
+msgstr ""
+
+#. translators: %s: formatted end date.
+#: includes/frontend/class-deals-page.php:87
+#, php-format
+msgid "Ends %s"
+msgstr ""
+
+#. translators: %s: percent value.
+#: includes/frontend/class-deals-page.php:116
+#, php-format
+msgid "−%s%% off"
+msgstr ""
+
+#. translators: %s: amount.
+#: includes/frontend/class-deals-page.php:119
+#, php-format
+msgid "%s off per item"
+msgstr ""
+
+#. translators: 1: buy quantity, 2: free quantity.
+#: includes/frontend/class-deals-page.php:122
+#, php-format
+msgid "Buy %1$d — get %2$d cheapest free"
+msgstr ""
+
+#. translators: 1: bundle size, 2: bundle price.
+#: includes/frontend/class-deals-page.php:125
+#, php-format
+msgid "Any %1$d for %2$s"
+msgstr ""
+
+#. translators: 1: subtotal threshold, 2: percent.
+#: includes/frontend/class-deals-page.php:147
+#, php-format
+msgid "Spend %1$s — get −%2$s%%"
+msgstr ""
+
+#. translators: %s: amount saved.
+#: includes/frontend/class-mini-cart.php:44
+#, php-format
+msgid "You save %s"
+msgstr ""
+
+#. translators: 1: missing amount, 2: discount percent.
+#: includes/frontend/class-mini-cart.php:83
+#, php-format
+msgid "Add %1$s more — get −%2$s%%"
+msgstr ""
+
+#. translators: %s: percent value.
+#: includes/frontend/class-popup.php:66
+#, php-format
+msgid "−%s%%"
+msgstr ""
+
+#: includes/frontend/class-popup.php:74
+msgid "Close"
+msgstr ""
+
+#: includes/frontend/class-popup.php:86
+msgid "Shop the deal"
+msgstr ""
+
+#: promo-engine.php:60
+msgid "Promo Engine requires WooCommerce to be installed and active."
+msgstr ""
