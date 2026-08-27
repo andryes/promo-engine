@@ -170,10 +170,18 @@ class Deals_Page {
 
 		switch ( $promo->scope_type ) {
 			case Promotion::SCOPE_PRODUCTS:
-				if ( ! $promo->scope_ids ) {
+				// A promotion may target specific variations — show their parents.
+				$ids = array();
+				foreach ( $promo->scope_ids as $scope_id ) {
+					$ids[] = ( 'product_variation' === get_post_type( $scope_id ) )
+						? (int) wp_get_post_parent_id( $scope_id )
+						: (int) $scope_id;
+				}
+				$ids = array_values( array_unique( array_filter( $ids ) ) );
+				if ( ! $ids ) {
 					return;
 				}
-				$args['post__in'] = $promo->scope_ids;
+				$args['post__in'] = $ids;
 				$args['orderby']  = 'post__in';
 				break;
 			case Promotion::SCOPE_CATEGORY:
