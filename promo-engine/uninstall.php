@@ -19,7 +19,8 @@ delete_transient( 'promo_engine_active_promos' );
 $promo_ids = get_posts(
 	array(
 		'post_type'      => 'pe_promotion',
-		'post_status'    => 'any',
+		// 'any' would skip trashed/auto-draft posts — list statuses explicitly.
+		'post_status'    => array_values( get_post_stati() ),
 		'posts_per_page' => -1,
 		'fields'         => 'ids',
 	)
