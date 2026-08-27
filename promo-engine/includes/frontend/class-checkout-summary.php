@@ -34,14 +34,18 @@ class Checkout_Summary {
 		?>
 		<tr class="pe-checkout-savings">
 			<th><?php esc_html_e( 'Promo savings', 'promo-engine' ); ?></th>
-			<td>−<?php echo wp_kses_post( wc_price( (float) $summary['total_saved'] ) ); ?></td>
+			<td>
+				−<?php echo wp_kses_post( wc_price( (float) $summary['total_saved'] ) ); ?>
+				<ul class="pe-checkout-savings__list">
+					<?php foreach ( $summary['promo_totals'] as $info ) : ?>
+						<li>
+							<span class="pe-checkout-savings__name"><?php echo esc_html( $info['name'] ); ?></span>
+							<span class="pe-checkout-savings__amount">−<?php echo wp_kses_post( wc_price( (float) $info['amount'] ) ); ?></span>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+			</td>
 		</tr>
-		<?php foreach ( $summary['promo_totals'] as $info ) : ?>
-			<tr class="pe-checkout-savings-line">
-				<th class="pe-checkout-savings-line__name"><?php echo esc_html( $info['name'] ); ?></th>
-				<td>−<?php echo wp_kses_post( wc_price( (float) $info['amount'] ) ); ?></td>
-			</tr>
-		<?php endforeach; ?>
 		<?php
 	}
 }
